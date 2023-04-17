@@ -44,6 +44,18 @@
 
         const data = await response.json();
         document.getElementById('fineTuneResult').textContent=JSON.stringify(data, null,2);
+        const fineTuneId = data.model.id;
+    }
+    async function getFineTuneList(){
+        //const fineTuneId=document.getElementById('fineTuneId').value;
+        const response = await fetch('https://api.openai.com/v1/fine-tunes',{
+            method:'GET',
+            headers:{
+                'Authorization': `Bearer ${apiKey}`,
+            },
+        });
+        const data=await response.json();
+        document.getElementById('fineTuneList').textContent=JSON.stringify(data,null,2);
     }
     </script>
     </head>
@@ -61,8 +73,13 @@
         <h2>Step 2: Fine-tune Model</h2>
         <label for="trainingFileField">Training File ID:</label>
         <input type="text" id="trainingFileID">
+
         <button onclick="fineTune()">Start Fine-tuning</button>
         <pre id="fineTuneResult"></pre>
+
+        <h3>Step3: Get-Fine-tune</h3>
+        <button onclick="getFineTuneList()">Get Fine-Tune lists</button>
+        <pre id="fineTuneList"></pre>
     </body>
     </html>
   
